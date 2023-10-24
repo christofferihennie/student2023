@@ -97,7 +97,7 @@ def complete_login(username, password):
     # (username and password have already been verified)
 
     # Generate session token:
-    h = hashlib.new("md5")
+    h = hashlib.sha256()
     h.update(username.encode("utf-8"))
     h.update(password.encode("utf-8"))
     session = h.hexdigest()
@@ -110,7 +110,7 @@ def complete_login(username, password):
     )
     print("Database response:")
     print(results)
-    return jsonify({"username": username, "password": password, "session": session})
+    return jsonify({"username": username, "password": hashlib.sha224(password.encode("utf-8")).hexdigest(), "session": session})
 
 
 @app.route("/api/login", methods=["POST"])
